@@ -1,0 +1,13 @@
+{
+    "id": "MyUSSID",
+    "question": "La mia domanda",
+    "url": "https://picsum.photos/200/300",
+    "checkingAnswer": {
+        "A":"Prima Possibile risposta",
+        "B":"Seconda Possibile risposta",
+        "C":"Terza Possibile risposta"
+    },
+    "answer": ["A","B"],
+    "explanation": "La mia spiegazione",
+    "category":["Java", "OCA"]
+}
