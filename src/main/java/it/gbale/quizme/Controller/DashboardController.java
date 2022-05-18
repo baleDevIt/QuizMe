@@ -1,5 +1,6 @@
 package it.gbale.quizme.Controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.bson.json.JsonObject;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.gbale.quizme.Entity.Category;
 import it.gbale.quizme.Entity.Question;
 import it.gbale.quizme.Service.QuestionService;
 import lombok.extern.log4j.Log4j2;
@@ -72,7 +74,6 @@ public class DashboardController {
             log.info(logMessage);
             return new ResponseEntity<>(savedQuestion, HttpStatus.OK);
         } catch (Exception e) {
-            // TODO: handle exception
             logMessage.append("Something went wrong");
             log.error(logMessage);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -95,7 +96,6 @@ public class DashboardController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e) {
-            // TODO: handle exception
             logMessage.append("Something went wrong");
             log.error(logMessage);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -103,19 +103,97 @@ public class DashboardController {
 
     }
 
-    // TODO: Lista di tutte le domande per specifica categoria
+    @RequestMapping(method = RequestMethod.GET, value = "/question")
+    public ResponseEntity<List<Question>> getListQuestionFromCategory(@RequestParam String category) {
+        StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
+        try {
+            // TODO: Lista di tutte le domande per specifica categoria
+            logMessage.append("List question returned!");
+            log.info(logMessage);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logMessage.append("Something went wrong");
+            log.error(logMessage);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     /** ---------- Gestione Categorie ---------- */
 
-    // TODO: Salvare una nuova categoria
+    @RequestMapping(method = RequestMethod.POST, value = "/category", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HttpStatus> saveNewCategory(@RequestParam Category category) {
+        StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
+        try {
+            // TODO: Salvare una nuova categoria
+            logMessage.append("Question correctly saved!");
+            log.info(logMessage);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logMessage.append("Something went wrong");
+            log.error(logMessage);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    // TODO: Eliminare una categoria
+    @RequestMapping(method = RequestMethod.DELETE, value = "/category")
+    public ResponseEntity<HttpStatus> deleteCategory(@RequestParam(name = "category") String category) {
+        StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
+        try {
+            // TODO: Eliminare una categoria
+            logMessage.append("Category correctly deleted!");
+            log.info(logMessage);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logMessage.append("Something went wrong");
+            log.error(logMessage);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    // TODO: Eliminare tutte le categorie
+    @RequestMapping(method = RequestMethod.DELETE, value = "/allCategory", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HttpStatus> deleteAllCategory(@RequestParam(name = "category") String category) {
+        StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
+        try {
+            // TODO: Eliminare tutte le categorie
+            logMessage.append("All Category correctly deleted!");
+            log.info(logMessage);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logMessage.append("Something went wrong");
+            log.error(logMessage);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    // TODO: Modificare una categoria
+    @RequestMapping(method = RequestMethod.POST, value = "/category", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HttpStatus> modifyCategory(@RequestParam Category category) {
+        StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
+        try {
+            // TODO: Modificare una categoria
+            logMessage.append("Category changed correctly!");
+            log.info(logMessage);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logMessage.append("Something went wrong");
+            log.error(logMessage);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    // TODO: Lista di tutte le categorie disponibile
+    @RequestMapping(method = RequestMethod.GET, value = "/category", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Category>> getListCategory(@RequestParam(name = "category") String category) {
+        StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
+        try {
+            // TODO: Lista di tutte le categorie disponibili
+            logMessage.append("List Category correctly sendend!");
+            log.info(logMessage);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logMessage.append("Something went wrong");
+            log.error(logMessage);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     /** ---------- Round ---------- */
 
