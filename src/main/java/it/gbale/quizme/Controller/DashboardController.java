@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.gbale.quizme.Entity.Category;
 import it.gbale.quizme.Entity.Question;
+import it.gbale.quizme.Entity.Round;
 import it.gbale.quizme.Service.QuestionService;
 import lombok.extern.log4j.Log4j2;
 import it.gbale.quizme.Utils.Validator;
@@ -197,13 +199,67 @@ public class DashboardController {
 
     /** ---------- Round ---------- */
 
-    // TODO: Iniziare un nuovo Round su specifica categoria
+    @RequestMapping(method = RequestMethod.GET, value = "/round")
+    public ResponseEntity<Round> getNewRound(@RequestParam(name = "category", required = false) String category) {
+        StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
+        try {
+            // TODO: Iniziare un nuovo Round su specifica categoria
+            logMessage.append("New Round started!");
+            log.info(logMessage);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logMessage.append("Something went wrong");
+            log.error(logMessage);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    // TODO: Mostra un round specifico tramite id
+    @RequestMapping(method = RequestMethod.GET, value = "/category", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Round> getRound(@RequestParam(name = "round", required = true) UUID idRound) {
+        StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
+        try {
+            // TODO: Mostra un round specifico tramite id
+            logMessage.append("Round with id ")
+                    .append(idRound.toString())
+                    .append(" returned!");
+            log.info(logMessage);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logMessage.append("Something went wrong with id ").append(idRound.toString());
+            log.error(logMessage);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    // TODO: Eliminare un round concluso
+    @RequestMapping(method = RequestMethod.DELETE, value = "/round")
+    public ResponseEntity<HttpStatus> deleteRound(@RequestParam(name = "round", required = true) UUID idRound) {
+        StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
+        try {
+            // TODO: Eliminare un round concluso
+            logMessage.append("Round with id ").append(idRound.toString()).append(" deleted!");
+            log.info(logMessage);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logMessage.append("Round with id ").append(idRound.toString()).append(" Something went wrong");
+            log.error(logMessage);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    // TODO: Lista di tutti i round di un utente con possibilità di filtrare per
-    // categoria
+    @RequestMapping(method = RequestMethod.GET, value = "/round/{category}")
+    public ResponseEntity<List<Round>> getAllRoundFromCategory(@PathVariable(name = "category") String category) {
+        StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
+        try {
+            // TODO: Lista di tutti i round di un utente con possibilità di filtrare per
+            // categoria
+            logMessage.append("New Round started!");
+            log.info(logMessage);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logMessage.append("Something went wrong");
+            log.error(logMessage);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }
