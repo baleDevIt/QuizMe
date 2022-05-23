@@ -21,12 +21,17 @@ import it.gbale.quizme.Entity.Round;
 import it.gbale.quizme.Service.QuestionService;
 import lombok.extern.log4j.Log4j2;
 import it.gbale.quizme.Utils.Validator;
-import it.gbale.quizme.Utils.Validator.*;
 
 @Log4j2
 @RestController
 @RequestMapping(path = "/")
 public class DashboardController {
+
+    /**
+     *
+     * ---------- DASHBOARD PAGE GESTION ----------
+     *
+     */
 
     @Autowired
     QuestionService questionService;
@@ -36,7 +41,11 @@ public class DashboardController {
         return new ResponseEntity<JsonObject>(HttpStatus.OK);
     }
 
-    /** ---------- QUESTION ---------- */
+    /**
+     * 
+     * ---------- QUESTION ----------
+     * 
+     */
 
     /**
      * Restituisce la domanda collegata ad uno specifico id
@@ -120,10 +129,14 @@ public class DashboardController {
         }
     }
 
-    /** ---------- Gestione Categorie ---------- */
+    /**
+     * 
+     * ---------- Gestione Categorie ----------
+     * 
+     */
 
     @RequestMapping(method = RequestMethod.POST, value = "/category", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpStatus> saveNewCategory(@RequestParam Category category) {
+    public ResponseEntity<HttpStatus> saveNewCategory(@RequestBody(required = true) Category category) {
         StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
         try {
             // TODO: Salvare una nuova categoria
@@ -167,8 +180,9 @@ public class DashboardController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/category", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpStatus> modifyCategory(@RequestParam Category category) {
+    @RequestMapping(method = RequestMethod.POST, value = "/category/{UUID}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HttpStatus> modifyCategory(@RequestBody(required = true) Category category,
+            @PathVariable(name = "UUID") UUID uuidCategory) {
         StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
         try {
             // TODO: Modificare una categoria
@@ -214,7 +228,7 @@ public class DashboardController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/category", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, value = "/round", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Round> getRound(@RequestParam(name = "round", required = true) UUID idRound) {
         StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
         try {
