@@ -3,6 +3,7 @@ package it.gbale.quizme.Controller;
 import java.util.List;
 import java.util.UUID;
 
+import it.gbale.quizme.Service.CategoryService;
 import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,9 @@ public class DashboardController {
 
     @Autowired
     QuestionService questionService;
+
+    @Autowired
+    CategoryService categoryService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<JsonObject> login() {
@@ -139,7 +143,7 @@ public class DashboardController {
     public ResponseEntity<HttpStatus> saveNewCategory(@RequestBody(required = true) Category category) {
         StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
         try {
-            // TODO: Salvare una nuova categoria
+            categoryService.saveNewCategory(category);
             logMessage.append("Question correctly saved!");
             log.info(logMessage);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -150,11 +154,11 @@ public class DashboardController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/category")
-    public ResponseEntity<HttpStatus> deleteCategory(@RequestParam(name = "category") String category) {
+    @RequestMapping(method = RequestMethod.DELETE, value = "/category/{categoryName}")
+    public ResponseEntity<HttpStatus> deleteCategory(@PathVariable(name = "categoryName") String category) {
         StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
         try {
-            // TODO: Eliminare una categoria
+            categoryService.deleteCategory(category);
             logMessage.append("Category correctly deleted!");
             log.info(logMessage);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -169,7 +173,7 @@ public class DashboardController {
     public ResponseEntity<HttpStatus> deleteAllCategory(@RequestParam(name = "category") String category) {
         StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
         try {
-            // TODO: Eliminare tutte le categorie
+            categoryService.deleteCategory(category, true);
             logMessage.append("All Category correctly deleted!");
             log.info(logMessage);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -182,10 +186,10 @@ public class DashboardController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/category/{UUID}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpStatus> modifyCategory(@RequestBody(required = true) Category category,
-            @PathVariable(name = "UUID") UUID uuidCategory) {
+            @PathVariable(name = "UUID") String uuidCategory) {
         StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
         try {
-            // TODO: Modificare una categoria
+            categoryService.modifyCategory(uuidCategory, category);
             logMessage.append("Category changed correctly!");
             log.info(logMessage);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -200,7 +204,7 @@ public class DashboardController {
     public ResponseEntity<List<Category>> getListCategory(@RequestParam(name = "category") String category) {
         StringBuilder logMessage = new StringBuilder(this.getClass().getName() + " - ");
         try {
-            // TODO: Lista di tutte le categorie disponibili
+            categoryService.getListCategory(category);
             logMessage.append("List Category correctly sendend!");
             log.info(logMessage);
             return new ResponseEntity<>(HttpStatus.OK);
